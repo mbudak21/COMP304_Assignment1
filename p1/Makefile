@@ -1,6 +1,6 @@
 # Makefile generated via ChatGPT
 CC=gcc
-CFLAGS=-Wall
+CFLAGS=-Wall -Wextra -O2
 TARGETS=p1a p1b
 
 # Default target
