@@ -34,13 +34,14 @@ int main(int argc, char *argv[]){
     if (pid == 0){
       level += 1;
       printf("Process ID: %d, Parent ID: %d, level: %d\n", getpid(), getppid(), level);
+      wait(NULL);
     }
     else{
       numOfChils += 1;
     }
   }
 
-  for (int i=0; i<numOfChils; i++){
+  for (int i=0; i<n; ++i){
     wait(NULL);
   }
 }
