@@ -6,15 +6,18 @@
 #include <signal.h>
 
 int main(){
+  int seconds=6;
   pid_t pid = fork();
   printf("Pid: %d\n", pid);
 
   if (pid == 0){ // Child
-    printf("hello");
-    sleep(6);
-    printf("Dead");
+    printf("Child Process started with PID: %d.\n", pid);
+    printf("Child Process PID:% d exiting.\n", pid);
+    exit(0);
   }
-  else {
-    kill();
+  else { // Parent
+    printf("Parent process waiting for %d seconds.\n", seconds);
+    sleep(seconds);
+    printf("Parent process PID: %d exiting.\n", pid);
   }
 }
