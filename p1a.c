@@ -4,8 +4,17 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 
-void print_info(int level){
-    printf("Process ID: %d, Parent ID: %d, level: %d\n", getpid(), getppid(), level);
+int fork_it(int n, int level){
+  if (n == 0){
+    return 0;
+  }
+
+  pid_t pid = fork();
+  if (pid == 0){
+    level++;
+    printf("Process ID: %d, Parent ID: %d, Level: %d\n", getpid(), getppid(), level);
+  }
+  fork_it(n-1, level);
 }
 
 int main(int argc, char *argv[]){
@@ -21,30 +30,7 @@ int main(int argc, char *argv[]){
     return 1;
   }
 
-
-  // Main Section
-  int level = 0;
-  int mainPID = getpid();
-  printf("Main Process ID: %d, level: %d\n", mainPID, level);
-
-  pid_t pid;
-  int numOfChils = 0;
-  for (int i=0; i<n; i++){
-    pid = fork();
-    if (pid == 0){
-      level += 1;
-      printf("Process ID: %d, Parent ID: %d, level: %d\n", getpid(), getppid(), level);
-      wait(NULL);
-    }
-    else{
-      numOfChils += 1;
-    }
-  }
-
-  for (int i=0; i<n; ++i){
-    wait(NULL);
-  }
+  // Main Process
+  printf("Main Process ID: %d, level: %d\n", getpid(), 0);
+  fork_it(n, 0);
 }
-
-
-
