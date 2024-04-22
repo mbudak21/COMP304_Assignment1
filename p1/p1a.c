@@ -4,17 +4,18 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 
-int fork_it(int n, int level){
+void fork_it(int n, int level){
   if (n == 0){
-    return 0;
+    return;
   }
-
-  pid_t pid = fork();
-  if (pid == 0){
-    level++;
-    printf("Process ID: %d, Parent ID: %d, Level: %d\n", getpid(), getppid(), level);
+  else{
+    pid_t pid = fork();
+    if (pid == 0){
+      level++;
+      printf("Process ID: %d, Parent ID: %d, Level: %d\n", getpid(), getppid(), level);
+    }
+    fork_it(n-1, level);
   }
-  fork_it(n-1, level);
 }
 
 int main(int argc, char *argv[]){
